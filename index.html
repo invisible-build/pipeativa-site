@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PipeAtiva — CRM por voz para intermediários de crédito</title>
+<meta name="description" content="O comercial fala; a PipeAtiva regista, lembra e avisa. CRM com inteligência artificial para intermediários de crédito.">
+<meta name="theme-color" content="#0F172A">
+<meta property="og:title" content="PipeAtiva — CRM por voz para intermediários de crédito">
+<meta property="og:description" content="O comercial fala; a PipeAtiva regista, lembra e avisa.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F172A'/%3E%3Ctext x='6' y='23' font-size='19' font-weight='800' font-family='Inter,Arial,sans-serif' fill='%23fff'%3EP%3C/text%3E%3Crect x='17' y='21' width='6' height='2' fill='%23fff'/%3E%3Ccircle cx='24.5' cy='22' r='2.4' fill='%232DD4BF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Identidade PipeAtiva (Mini Brand Guide): azul-noite = estrutura, turquesa = acção,
+   ciano = IA e dados. Hero azul-noite + CTA turquesa; fundos neutros nas secções de leitura. */
+:root{
+  --navy:#0F172A;--grafite:#1F2937;--turq:#2DD4BF;--turq-d:#0F766E;--ciano:#38BDF8;
+  --bg:#F8FAFC;--s1:#fff;--s2:#F1F5F9;--line:#E5E7EB;--text:#1F2937;--text2:#475569;--muted:#94A3B8;
+  --max:1120px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+h1,h2,h3{color:var(--navy);line-height:1.15;letter-spacing:-.02em}
+h2{font-size:clamp(26px,3.6vw,38px);font-weight:800}
+h3{font-size:18px;font-weight:700}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--turq-d);margin-bottom:12px}
+.lead{font-size:18px;color:var(--text2);max-width:640px}
+section{padding:88px 0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn-p{background:var(--turq);color:var(--navy);box-shadow:0 8px 24px rgba(45,212,191,.28)}
+.btn-s{border:1px solid rgba(255,255,255,.22);color:#fff}
+.btn-s:hover{border-color:rgba(255,255,255,.45)}
+
+/* ---------- logótipo (o mesmo do Terminal: a linha é a continuação do «e») ---------- */
+.brand{display:inline-flex;align-items:baseline;font-weight:800;letter-spacing:-.025em;font-size:22px;line-height:1;color:#fff;white-space:nowrap;text-decoration:none}
+.brand .e{display:inline-block;clip-path:polygon(0 0,100% 0,100% calc(100% - .368em),.31em calc(100% - .368em),.31em calc(100% - .25em),100% calc(100% - .25em),100% 100%,0 100%)}
+.brand .ln{display:inline-block;position:relative;top:.009em;width:.865em;height:.123em;background:currentColor;margin:0 .3em 0 -.2651em}
+.brand .ln::after{content:'';position:absolute;right:-.2em;top:50%;width:.24em;height:.24em;border-radius:50%;background:var(--turq);transform:translateY(-50%)}
+.brand .at{color:var(--turq)}
+
+/* ---------- topo e hero ---------- */
+.hero{background:radial-gradient(90% 70% at 75% 10%,#13304a 0%,var(--navy) 60%);color:#E2E8F0;padding:0 0 96px;overflow:hidden}
+nav.top{display:flex;align-items:center;gap:28px;padding:22px 0}
+nav.top .links{display:flex;gap:26px;margin-left:auto;font-size:14px;font-weight:500}
+nav.top .links a{text-decoration:none;color:#CBD5E1}
+nav.top .links a:hover{color:#fff}
+nav.top .btn{padding:10px 16px;font-size:14px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;padding-top:56px}
+.hero h1{color:#fff;font-size:clamp(38px,5.6vw,62px);font-weight:800;margin:6px 0 20px}
+.hero h1 em{font-style:normal;color:var(--turq)}
+.hero .eyebrow{color:var(--turq)}
+.hero p.sub{font-size:19px;color:#CBD5E1;max-width:540px;margin-bottom:30px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero .nota{font-size:13px;color:var(--muted);margin-top:18px}
+
+/* telemóvel com o cartão de confirmação */
+.phone{justify-self:center;width:300px;border-radius:38px;background:#0B1222;border:1px solid rgba(255,255,255,.1);padding:14px;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 8px rgba(255,255,255,.03)}
+.screen{border-radius:28px;background:var(--bg);overflow:hidden;color:var(--text)}
+.scr-top{background:var(--navy);padding:14px 16px;display:flex;align-items:center}
+.scr-top .brand{font-size:15px}
+.scr-body{padding:16px 14px 18px}
+.said{font-size:12px;color:var(--text2);font-style:italic;border-left:2px solid var(--turq);padding:2px 0 2px 10px;margin-bottom:12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 6px 20px rgba(15,23,42,.08)}
+.card b{display:block;font-size:13.5px;color:var(--navy);line-height:1.4;margin-bottom:10px}
+.ev{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;color:var(--text2);background:var(--s2);border-radius:8px;padding:7px 9px;margin-top:6px}
+.ev i{font-style:normal;font-size:9.5px;font-weight:700;color:var(--turq-d);background:rgba(45,212,191,.16);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.yes{margin-top:12px;background:var(--turq);color:var(--navy);font-weight:700;font-size:13px;text-align:center;border-radius:10px;padding:11px}
+.no{margin-top:6px;border:1px solid var(--line);color:var(--text2);font-weight:600;font-size:13px;text-align:center;border-radius:10px;padding:10px}
+.mic{display:flex;align-items:center;gap:8px;margin-top:14px;background:#fff;border:1px solid #CBD5E1;border-radius:99px;padding:6px 6px 6px 14px;font-size:11.5px;color:var(--muted)}
+.mic span{flex:1}
+.mic b{width:30px;height:30px;border-radius:50%;background:var(--turq);display:grid;place-items:center}
+.mic b svg{width:14px;height:14px}
+
+/* ---------- problema ---------- */
+.dores{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
+.dor{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+.dor h3{font-size:16px;margin-bottom:6px}
+.dor p{font-size:14.5px;color:var(--text2)}
+
+/* ---------- como funciona ---------- */
+.como{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.passos{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px;counter-reset:p}
+.passo{position:relative;border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--bg)}
+.passo::before{counter-increment:p;content:counter(p);display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--navy);color:var(--turq);font-weight:800;margin-bottom:14px}
+.passo.chave{border-color:var(--turq);background:rgba(45,212,191,.07)}
+.passo h3{margin-bottom:6px}
+.passo p{font-size:14.5px;color:var(--text2)}
+.vig{margin-top:18px;display:flex;gap:18px;align-items:center;background:var(--navy);color:#CBD5E1;border-radius:14px;padding:20px 24px}
+.vig strong{color:#fff}
+.vig .ic{flex:none;width:42px;height:42px;border-radius:11px;background:rgba(56,189,248,.15);display:grid;place-items:center}
+
+/* ---------- vantagens ---------- */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.feat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}
+.feat .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px}
+.ic svg{width:22px;height:22px}
+.ic.t{background:rgba(45,212,191,.15);color:var(--turq-d)}
+.ic.c{background:rgba(56,189,248,.15);color:#0369A1}
+.ic.v{background:rgba(124,58,237,.12);color:#6D28D9}
+.feat h3{margin-bottom:6px}
+.feat p{font-size:14.5px;color:var(--text2)}
+.grupo{margin-top:56px}
+.grupo h3.tit{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);font-weight:700}
+
+/* ---------- comparação ---------- */
+.cmp{margin-top:36px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.cmp table{width:100%;border-collapse:collapse;font-size:15px}
+.cmp th,.cmp td{padding:14px 18px;text-align:left;border-top:1px solid var(--line);vertical-align:top}
+.cmp tr:first-child th{border-top:none;background:var(--s2);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--text2)}
+.cmp td:first-child{font-weight:600;color:var(--navy);width:28%}
+.cmp td:nth-child(2){color:var(--text2)}
+.cmp td:last-child{color:var(--navy);font-weight:600}
+.cmp th:last-child{color:var(--turq-d)!important}
+
+/* ---------- números ---------- */
+.nums{background:var(--navy);color:#CBD5E1}
+.nums h2{color:#fff}
+.nums .eyebrow{color:var(--turq)}
+.num-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.num{border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:26px;background:rgba(255,255,255,.03)}
+.num b{display:block;font-size:46px;font-weight:800;color:var(--turq);letter-spacing:-.03em;line-height:1}
+.num span{display:block;color:#fff;font-weight:600;margin:12px 0 4px}
+.num p{font-size:14px;color:var(--muted)}
+
+/* ---------- segurança ---------- */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.seg ul{list-style:none;display:grid;gap:14px;margin-top:6px}
+.seg li{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:15px}
+.seg li svg{flex:none;width:20px;height:20px;color:var(--turq-d);margin-top:2px}
+
+/* ---------- começar / contacto ---------- */
+.comecar{background:#fff;border-top:1px solid var(--line)}
+.etapas{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
+.etapa{border-left:3px solid var(--turq);padding:4px 0 4px 16px}
+.etapa small{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--turq-d)}
+.etapa h3{margin:4px 0}
+.etapa p{font-size:14.5px;color:var(--text2)}
+.cta-final{margin-top:64px;background:radial-gradient(90% 120% at 85% 0%,#13304a 0%,var(--navy) 65%);border-radius:22px;padding:48px;display:flex;gap:32px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cta-final h2{color:#fff;max-width:560px}
+.cta-final p{color:#CBD5E1;margin-top:10px;max-width:560px}
+
+footer{background:var(--navy);color:var(--muted);font-size:13.5px;padding:34px 0}
+footer .wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+footer .brand{font-size:17px}
+footer .dir{margin-left:auto}
+
+@media(max-width:900px){
+  nav.top .links{display:none}
+  nav.top .btn{margin-left:auto}
+  .hero-grid{grid-template-columns:1fr;gap:48px;padding-top:28px}
+  .dores,.passos,.etapas{grid-template-columns:1fr 1fr}
+  .feats,.num-grid{grid-template-columns:1fr}
+  .seg{grid-template-columns:1fr;gap:24px}
+  section{padding:64px 0}
+  .cta-final{padding:32px 24px}
+}
+@media(max-width:560px){
+  .dores,.passos,.etapas{grid-template-columns:1fr}
+  .phone{width:min(300px,100%)}
+  .cmp table{font-size:13.5px}
+  .cmp th,.cmp td{padding:11px 12px}
+  footer .dir{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="top">
+      <a class="brand" href="#" aria-label="PipeAtiva"><span>Pip<span class="e">e</span></span><span class="ln"></span><span class="at">Ativa</span></a>
+      <div class="links">
+        <a href="#como">Como funciona</a>
+        <a href="#vantagens">Vantagens</a>
+        <a href="#seguranca">Segurança</a>
+        <a href="#comecar">Começar</a>
+      </div>
+      <a class="btn btn-p" href="#contacto">Pedir demonstração</a>
+    </nav>
+
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">CRM + IA + Automação para intermediários de crédito</div>
+        <h1>Organiza, liga e ativa o teu <em>crescimento.</em></h1>
+        <p class="sub">O comercial fala trinta segundos no carro. A PipeAtiva regista o contacto, muda a fase do processo, guarda as promessas com prazo e avisa quando alguma coisa parou.</p>
+        <div class="ctas">
+          <a class="btn btn-p" href="#contacto">Pedir demonstração →</a>
+          <a class="btn btn-s" href="#como">Ver como funciona</a>
+        </div>
+        <p class="nota">Sem instalar nada · funciona no telemóvel e no computador</p>
+      </div>
+
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="scr-top"><span class="brand"><span>Pip<span class="e">e</span></span><span class="ln"></span><span class="at">Ativa</span></span></div>
+          <div class="scr-body">
+            <div class="said">«Falei com a Ana, vai enviar os recibos até sexta. O Santander já aprovou.»</div>
+            <div class="card">
+              <b>Registo o contacto com a Ana, a aprovação do Santander e a promessa dos recibos até sexta às 18:00?</b>
+              <div class="ev"><i>contacto</i>Ana Ferreira · atendeu</div>
+              <div class="ev"><i>banco</i>Santander · aprovado</div>
+              <div class="ev"><i>promessa</i>Recibos de vencimento · sexta, 18:00</div>
+              <div class="yes">Sim, é isso</div>
+              <div class="no">Não</div>
+            </div>
+            <div class="mic"><span>Fala ou escreve o que aconteceu…</span><b><svg viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="eyebrow">O problema</div>
+    <h2>O que fica combinado ao telefone raramente chega ao CRM.</h2>
+    <p class="lead" style="margin-top:14px">Um intermediário de crédito vive ao telefone e na rua. Preencher formulários ao fim do dia é a primeira coisa a cair quando o dia aperta.</p>
+    <div class="dores">
+      <div class="dor"><h3>Promessas que se perdem</h3><p>«Envio-lhe os recibos na sexta» fica na cabeça de alguém, e ninguém volta ao assunto.</p></div>
+      <div class="dor"><h3>Processos parados</h3><p>Uma lead fica três semanas à espera de um documento e só se descobre quando o cliente já foi a outro lado.</p></div>
+      <div class="dor"><h3>O dono às cegas</h3><p>Saber como está cada processo obriga a perguntar a cada comercial, um a um.</p></div>
+      <div class="dor"><h3>Um CRM vazio</h3><p>Desactualizado, deixa de servir para decidir, e a equipa deixa de o abrir.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="como" id="como">
+  <div class="wrap">
+    <div class="eyebrow">Como funciona</div>
+    <h2>Do telemóvel ao registo em menos de um minuto.</h2>
+    <div class="passos">
+      <div class="passo"><h3>Fala</h3><p>Trinta segundos de voz, ou uma frase escrita, como falaria com uma secretária.</p></div>
+      <div class="passo"><h3>A PipeAtiva percebe</h3><p>Cliente, banco, fase do processo, valores, prazos e quem fica à espera de quem.</p></div>
+      <div class="passo chave"><h3>Confirma</h3><p>Um cartão mostra o que entendeu. Nada entra na base sem o «Sim» do comercial.</p></div>
+      <div class="passo"><h3>Fica registado</h3><p>Lead, histórico, tarefas e promessas, com prazo e hora, sem formulários.</p></div>
+    </div>
+    <div class="vig">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div><strong>Todas as manhãs, o Vigilante</strong> aponta o que parou, as tarefas em atraso e fecha sozinho as pendências que o processo já resolveu, em dias úteis, descontando feriados e férias.</div>
+    </div>
+  </div>
+</section>
+
+<section id="vantagens">
+  <div class="wrap">
+    <div class="eyebrow">Vantagens</div>
+    <h2>Menos tempo a registar. Nenhum processo esquecido.</h2>
+
+    <div class="grupo">
+      <h3 class="tit">Para o comercial</h3>
+      <div class="feats">
+        <div class="feat"><div class="ic t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><h3>Regista a falar</h3><p>No carro, à saída de uma reunião. Percebe a linguagem do sector: bancos, documentos, spreads, escrituras.</p></div>
+        <div class="feat"><div class="ic t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Promessas sempre com prazo</h3><p>Se ninguém disse quando, a PipeAtiva propõe um prazo razoável. Quando a promessa se cumpre, fecha sozinha.</p></div>
+        <div class="feat"><div class="ic c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 5-6"/></svg></div><h3>Ponto de situação num segundo</h3><p>«Como está o processo do Rui?» devolve fase, bancos, o que falta e o que está prometido, pronto a partilhar ou em PDF.</p></div>
+        <div class="feat"><div class="ic c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h7"/><path d="m15 16 2 2 4-4"/></svg></div><h3>Propostas lado a lado</h3><p>As FIN dos bancos são lidas automaticamente e comparadas: prestação, TAEG, MTIC, seguros, com a melhor marcada.</p></div>
+        <div class="feat"><div class="ic t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div><h3>Leads recuperáveis</h3><p>Quem adiou a compra fica em nutrição, com a data em que se combinou voltar a ligar.</p></div>
+        <div class="feat"><div class="ic v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m12 3 2.1 5.4L20 9l-4.5 3.8L17 19l-5-3.2L7 19l1.5-6.2L4 9l5.9-.6z"/></svg></div><h3>Aprende com as correcções</h3><p>Quando o cartão vem errado, o comercial diz o que estava mal. As correcções são revistas e tornam a IA mais certeira.</p></div>
+      </div>
+    </div>
+
+    <div class="grupo">
+      <h3 class="tit">Para o dono da agência</h3>
+      <div class="feats">
+        <div class="feat"><div class="ic c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>O Vigilante</h3><p>Aponta, nunca manda: o alerta vai para o comercial, com as acções ao lado. Quem decide é ele.</p></div>
+        <div class="feat"><div class="ic c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 20V9"/></svg></div><h3>Visão da equipa</h3><p>Leads e valor por comercial, por fase, sem perguntar a ninguém. Resumo diário por email.</p></div>
+        <div class="feat"><div class="ic t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8v4l2 2"/><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg></div><h3>Histórico completo</h3><p>Quem disse o quê, quando, e o que mudou em cada processo. Nada é apagado automaticamente.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Face a um CRM tradicional</div>
+    <h2>Não muda a forma de trabalhar. Só deixa de se perder o que já se fazia.</h2>
+    <div class="cmp"><table>
+      <tr><th></th><th>CRM tradicional</th><th>PipeAtiva</th></tr>
+      <tr><td>Registar uma conversa</td><td>Formulário, vários campos</td><td>30 segundos de voz</td></tr>
+      <tr><td>Quando se regista</td><td>Ao fim do dia, se houver tempo</td><td>No momento, no telemóvel</td></tr>
+      <tr><td>Promessas e prazos</td><td>Dependem de quem escreve</td><td>Sempre com prazo e hora</td></tr>
+      <tr><td>Processos parados</td><td>Descobrem-se tarde</td><td>Alerta na manhã em que passam o limite</td></tr>
+      <tr><td>Ponto de situação</td><td>Abrir a ficha e ler</td><td>Pergunta-se, e chega o resumo</td></tr>
+      <tr><td>Adopção pela equipa</td><td>A equipa resiste</td><td>Fala-se como com uma secretária</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section class="nums">
+  <div class="wrap">
+    <div class="eyebrow">Resultados medidos</div>
+    <h2>Testado frase a frase antes de cada alteração.</h2>
+    <div class="num-grid">
+      <div class="num"><b>96%</b><span>interpretações certas à primeira</span><p>Em frases realistas de comerciais, sem nenhum ajuste manual. Cada mudança às regras da IA só entra se nada piorar.</p></div>
+      <div class="num"><b>30 s</b><span>para registar uma conversa</span><p>Em vez de minutos de formulários. As confirmações pelo botão «Sim» são instantâneas.</p></div>
+      <div class="num"><b>07:00</b><span>o Vigilante já passou por tudo</span><p>Na primeira execução real encontrou 30 situações a pedir atenção e arrumou 31 pendências esquecidas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="seguranca">
+  <div class="wrap seg">
+    <div>
+      <div class="eyebrow">Segurança e RGPD</div>
+      <h2>Os dados da agência são da agência.</h2>
+      <p class="lead" style="margin-top:14px">Feita para quem trata dados financeiros de clientes todos os dias.</p>
+    </div>
+    <ul>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg>Cada agência tem a sua própria base de dados, separada de todas as outras.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg>Cada comercial entra com o seu PIN e só vê o que é seu.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg>IA em plano profissional: os pedidos não são usados para treinar modelos.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg>Cópias de segurança diárias. Nada é apagado automaticamente.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg>Acordo de tratamento de dados (DPA) e política de privacidade para assinar.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="comecar" id="comecar">
+  <div class="wrap">
+    <div class="eyebrow">Como começar</div>
+    <h2>A funcionar em uma a duas semanas.</h2>
+    <div class="etapas">
+      <div class="etapa"><small>30 minutos</small><h3>Conversa</h3><p>Como a agência trabalha: fases, bancos parceiros, prazos habituais.</p></div>
+      <div class="etapa"><small>1 a 2 semanas</small><h3>Instalação</h3><p>A base, a app e as rotinas, com os dados e as leads que já tem.</p></div>
+      <div class="etapa"><small>30 dias</small><h3>Piloto</h3><p>Com a equipa real. No fim, revemos juntos as correcções e afinamos.</p></div>
+      <div class="etapa"><small>Contínuo</small><h3>Em produção</h3><p>Revisão periódica e novas funcionalidades a chegar.</p></div>
+    </div>
+
+    <div class="cta-final" id="contacto">
+      <div>
+        <h2>Veja a PipeAtiva a funcionar, com dados de exemplo.</h2>
+        <p>Uma demonstração de 20 minutos, no seu escritório ou por videochamada. Proposta à medida da dimensão da agência.</p>
+      </div>
+      <a class="btn btn-p" id="ctaEmail" href="#">Pedir demonstração →</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="brand"><span>Pip<span class="e">e</span></span><span class="ln"></span><span class="at">Ativa</span></span>
+    <span>CRM + IA + Automação para intermediários de crédito</span>
+    <span class="dir">© <span id="ano">2026</span> PipeAtiva</span>
+  </div>
+</footer>
+
+<script>
+// Endereço dos pedidos de demonstração: muda-se só aqui.
+const CONTACTO = 'cesarfsaraujo@gmail.com';
+const assunto = encodeURIComponent('Pedido de demonstração PipeAtiva');
+const corpo = encodeURIComponent('Olá,\n\nGostava de ver uma demonstração da PipeAtiva.\n\nAgência:\nNúmero de comerciais:\nTelefone:\n');
+const mail = 'mailto:' + CONTACTO + '?subject=' + assunto + '&body=' + corpo;
+document.querySelectorAll('a[href="#contacto"], #ctaEmail').forEach(a => { if (a.id === 'ctaEmail') a.href = mail; });
+document.getElementById('ano').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
